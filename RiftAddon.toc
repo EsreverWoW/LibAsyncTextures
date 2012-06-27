@@ -1,0 +1,20 @@
+Identifier = "LibAsyncTexture"
+Name = "LibAsyncTexture"
+NameShort = "LibAsyncTexture"
+Description = "A library for providing asynchronous loading of Texture widget contents in the background to avoid getting barked at by the Watchdog in texture-rich environments."
+
+Author = "Imhothar"
+Website = "http://www.curse.com/addons/rift/lib-async-texture"
+Email = "imhothar@freenet.de"
+
+Version = "1.0beta"
+Environment = "1.8"
+
+RunOnStartup = {
+	"main.lua",
+}
+
+-- Set this value to true to enable chat spamming debug messages and other debugging facilities
+--@debug@
+debug = true
+--@end-debug@
