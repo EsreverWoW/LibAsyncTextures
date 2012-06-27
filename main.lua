@@ -112,7 +112,7 @@ function public.CancelSetTextureAsync(frame)
 	local frames = pendingList[addonIdentifier]
 	if(frames) then
 		for i = 1, #frames do
-			if(frames[i] == frame) then
+			if(frames[i][1] == frame) then
 				tremove(frames, i)
 				pendingTextures = pendingTextures - 1
 				return
