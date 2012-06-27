@@ -11,7 +11,7 @@ local type = type
 -- Globals
 local dump = dump
 local Event = Event
-local Inspect = Inspect
+local InspectAddonCurrent = Inspect.Addon.Current
 local UI = UI
 local UtilityDispatch = Utility.Dispatch
 
@@ -34,7 +34,7 @@ local weights = {
 
 -- How many weghted loads are allowed per system update?
 -- This parameter is a guesstimate and probably needs some tweaking.
-local loadPerUpdate = 64
+local loadPerUpdate = 128
 
 -- The public interface table
 local public = { }
@@ -98,7 +98,7 @@ function public.SetTextureAsync(frame, source, texture, weight, callback)
 		weight = weights.medium
 	end
 	
-	local addonIdentifier = Inspect.Addon.Current()
+	local addonIdentifier = InspectAddonCurrent()
 	local frames = pendingList[addonIdentifier] or { }
 	pendingList[addonIdentifier] = frames
 	
@@ -117,7 +117,7 @@ end
 
 -- Cancel the asynchronous loading for the given frame in the current addon
 function public.CancelSetTextureAsync(frame)
-	local addonIdentifier = Inspect.Addon.Current()
+	local addonIdentifier = InspectAddonCurrent()
 	local frames = pendingList[addonIdentifier]
 	if(frames) then
 		for i = 1, #frames do
@@ -132,12 +132,12 @@ end
 
 -- Cancel all currently pending textures for the current addon
 function public.CancelAllPendingTextures()
-	pendingList[Inspect.Addon.Current()] = { }
+	pendingList[InspectAddonCurrent()] = { }
 end
 
 -- Return how many textures are pending in the current addon
 function public.GetNumPendingTextures()
-	local addonIdentifier = Inspect.Addon.Current()
+	local addonIdentifier = InspectAddonCurrent()
 	local frames = pendingList[addonIdentifier]
 	return frames and #frames or 0
 end
