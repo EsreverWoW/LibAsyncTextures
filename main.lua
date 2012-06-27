@@ -38,7 +38,7 @@ local loadPerUpdate = 128
 
 -- The public interface table
 local public = { }
-LibAsyncTexture = public
+LibAsyncTextures = public
 
 setfenv(1, private)
 
