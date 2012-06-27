@@ -149,4 +149,4 @@ meta.__index.SetTextureAsync = public.SetTextureAsync
 meta.__index.CancelSetTextureAsync = public.CancelSetTextureAsync
 
 local event = { loadTextures, Addon.identifier, "loadTextures" }
-Event.System.Update.Begin[#Event.System.Update.Begin + 1] = event
+Event.System.Update.End[#Event.System.Update.End + 1] = event
