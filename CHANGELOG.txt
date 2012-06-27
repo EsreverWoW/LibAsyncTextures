@@ -1,5 +1,5 @@
 FEATURES:
-* Initial release
+* Initial release, check http://rift.curseforge.com/addons/lib-async-textures/
 CHANGES:
 FIXES:
 ISSUES:
