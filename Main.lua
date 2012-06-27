@@ -65,10 +65,7 @@ local function loadTextures()
 	local index = previousIndex
 	local addon
 
---	log("start", pendingTextures)
 	while(pendingTextures > 0 and loaded < loadPerUpdate) do
---		log("loop", pendingTextures, loaded)
---		dumpList()
 		-- Load the textures in round-robin fashion i.e.
 		-- One texture per addon, cycling all addons
 		index, addon = next(pendingList, index)
@@ -82,7 +79,6 @@ local function loadTextures()
 			end
 		end
 	end
---	log("end", pendingTextures, loaded)
 	previousIndex = index
 end
 
