@@ -4,7 +4,7 @@ NameShort = "LibAsyncTextures"
 Description = "A library for providing asynchronous loading of Texture widget contents in the background to avoid getting barked at by the Watchdog in texture-rich environments."
 
 Author = "Imhothar"
-Website = "http://www.curse.com/addons/rift/lib-async-textures"
+Website = "http://rift.curseforge.com/addons/lib-async-textures/"
 Email = "imhothar@freenet.de"
 
 Version = "1.0beta"
