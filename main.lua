@@ -6,17 +6,19 @@ local next = next
 local pairs = pairs
 local print = print
 local tremove = table.remove
+local type = type
 
 -- Globals
 local dump = dump
 local Event = Event
 local Inspect = Inspect
 local UI = UI
+local UtilityDispatch = Utility.Dispatch
 
 local pendingList = {
 --[[
 	[addon] = {
-		[*] = { frame, identifier, texture, weight }
+		[*] = { frame, source, texture, weight, callback }
 	}
 ]]
 }
@@ -75,6 +77,9 @@ local function loadTextures()
 			entry[1]:SetTexture(entry[2], entry[3])
 			loaded = loaded + entry[4]
 			pendingTextures = pendingTextures - 1
+			if(entry[5]) then
+				UtilityDispatch(function() entry[5](frame) end, index, "SetTextureAsync callback")
+			end
 		end
 	end
 --	log("end", pendingTextures, loaded)
@@ -85,9 +90,13 @@ end
 -- ============================================================================
 
 -- Enqueue the given texture load in the current addon
-function public.SetTextureAsync(frame, identifier, texture, sizeHint)
+function public.SetTextureAsync(frame, source, texture, weight, callback)
 	-- Translate the string weight to a numerical value, default is "medium"
-	local weight = weights[sizeHint] or weights.medium
+	if(type(weight) == "string") then
+		weight = weights[weight] or weights.medium
+	elseif(not weight or weight < 1) then
+		weight = weights.medium
+	end
 	
 	local addonIdentifier = Inspect.Addon.Current()
 	local frames = pendingList[addonIdentifier] or { }
@@ -102,7 +111,7 @@ function public.SetTextureAsync(frame, identifier, texture, sizeHint)
 		end
 	end
 	
-	frames[#frames + 1] = { frame, identifier, texture, weight }
+	frames[#frames + 1] = { frame, source, texture, weight, type(callback) == "function" and callback or nil }
 	pendingTextures = pendingTextures + 1
 end
 
