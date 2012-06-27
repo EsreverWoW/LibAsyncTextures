@@ -1,0 +1,5 @@
+package-as: LibAsyncTextures
+
+license-output: LICENSE.txt
+manual-changelog: CHANGELOG.txt
+
