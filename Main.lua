@@ -82,7 +82,7 @@ loadTextures = function()
 			entry[1]:SetTexture(entry[2], entry[3])
 			pendingTextures = pendingTextures - 1
 			if(entry[4]) then
-				UtilityDispatch(function() entry[4](frame) end, index, "SetTextureAsync callback")
+				UtilityDispatch(function() entry[4](entry[1]) end, index, "SetTextureAsync callback")
 			end
 		end
 	until(pendingTextures == 0 or InspectTimeReal() > endTime)
