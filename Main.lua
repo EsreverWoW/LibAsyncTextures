@@ -85,13 +85,11 @@ loadTextures = function()
 				UtilityDispatch(function() entry[4](entry[1]) end, index, "SetTextureAsync callback")
 			end
 		end
-	until(pendingTextures == 0 or InspectTimeReal() > endTime)
+	until(pendingTextures == 0 or InspectTimeReal() >= endTime)
+	previousIndex = index
 	
 	if(pendingTextures == 0) then
 		disable()
-		previousIndex = nil
-	else
-		previousIndex = index
 	end
 end
 
