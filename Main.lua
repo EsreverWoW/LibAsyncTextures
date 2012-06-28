@@ -26,7 +26,7 @@ local pendingTextures = 0
 -- How many weghted loads are allowed per system update?
 -- This parameter is a guesstimate and probably needs some tweaking.
 local maxLoadTime = 0.010
-local maxWatchdogTolerance = 0.100
+local maxWatchdogTolerance = 0.050
 
 -- The public interface table
 local public = { }
