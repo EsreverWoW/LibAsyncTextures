@@ -79,7 +79,9 @@ loadTextures = function()
 		index, addon = next(pendingList, index)
 		if(addon and #addon > 0) then
 			local entry = tremove(addon, 1)
-			entry[1]:SetTexture(entry[2], entry[3])
+			if(entry[1]) then
+				entry[1]:SetTexture(entry[2], entry[3])
+			end
 			pendingTextures = pendingTextures - 1
 			if(entry[4]) then
 				UtilityDispatch(function() entry[4](entry[1]) end, index, "SetTextureAsync callback")
@@ -133,6 +135,19 @@ function public.CancelSetTextureAsync(frame)
 	end
 	if(pendingTextures == 0) then
 		disable()
+	end
+end
+
+-- Insert a generic callback at the end of the queue to be executed when the already queued textures have loaded
+function public.EnqueueCallback(callback)
+	local addonIdentifier = InspectAddonCurrent()
+	local frames = pendingList[addonIdentifier] or { }
+	pendingList[addonIdentifier] = frames
+	
+	frames[#frames + 1] = { nil, nil, nil, type(callback) == "function" and callback or nil }
+	pendingTextures = pendingTextures + 1
+	if(pendingTextures == 1) then
+		enable()
 	end
 end
 
