@@ -1,16 +1,16 @@
 local Addon, private = ...
 
--- Builtins
+-- Upvalues
+local Command = Command
+local Event = Event
+local InspectAddonCurrent = Inspect.Addon.Current
+local InspectSystemWatchdog = Inspect.System.Watchdog
+local InspectTimeReal = Inspect.Time.Real
 local next = next
 local pairs = pairs
 local print = print
 local tremove = table.remove
 local type = type
-
--- Globals
-local InspectAddonCurrent = Inspect.Addon.Current
-local InspectSystemWatchdog = Inspect.System.Watchdog
-local InspectTimeReal = Inspect.Time.Real
 local UtilityDispatch = Utility.Dispatch
 
 -- Locals
@@ -37,9 +37,6 @@ local textureMeta = UI.CreateFrame("Texture", "Dummy", UI.CreateContext("LibAsyn
 textureMeta:SetVisible(false)
 textureMeta = getmetatable(textureMeta)
 
-local eventSystemUpdateEnd = { function() end, Addon.identifier, "loadTextures" }
-Event.System.Update.End[#Event.System.Update.End + 1] = eventSystemUpdateEnd
-
 setfenv(1, private)
 
 if(Addon.toc.debug) then
@@ -55,11 +52,11 @@ end
 local loadTextures
 
 local function enable()
-	eventSystemUpdateEnd[1] = loadTextures
+	Command.Event.Attach(Event.System.Update.End, loadTextures, "loadTextures")
 end
 
 local function disable()
-	eventSystemUpdateEnd[1] = function() end
+	Command.Event.Detach(Event.System.Update.End, loadTextures)
 end
 
 local previousIndex = nil
